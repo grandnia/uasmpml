@@ -19,7 +19,7 @@ price = st.number_input('Harga Jual per Produk (Rp)', min_value=0.0, value=25000
 menu_category = st.selectbox('Kategori Menu', ['Makanan', 'Minuman', 'Dessert'])
 ingredients = st.text_area('Bahan-bahan', 'Nasi, Telur, Ayam, Kecap')
 
-# Buat DataFrame sesuai urutan & nama kolom training
+# Buat DataFrame sesuai kolom yang pipeline terima
 input_data = pd.DataFrame([{
     'MenuItem': menu_item,
     'RestaurantID': restaurant_id,
@@ -31,8 +31,8 @@ input_data = pd.DataFrame([{
 # Prediksi
 if st.button('Prediksi Profit'):
     try:
+        # Prediksi dengan pipeline
         prediksi = pipeline.predict(input_data)
         st.success(f"Estimasi profit: Rp {prediksi[0]:,.2f}")
     except Exception as e:
         st.error(f"Terjadi error saat prediksi: {e}")
-

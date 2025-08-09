@@ -1,13 +1,17 @@
 import streamlit as st
 import joblib
-import pandas as pd
 import os
 
 st.title("Prediksi Profit Menu Restoran")
 
-# Path file pipeline
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 pipeline_path = os.path.join(BASE_DIR, "pipeline_rfnew.pkl")
+
+# Import semua library yang diperlukan untuk unpickle pipeline
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestClassifier
 
 # Load pipeline
 pipeline = joblib.load(pipeline_path)
@@ -36,3 +40,4 @@ if st.button('Prediksi Profit'):
         st.success(f"Estimasi profit: Rp {prediksi[0]:,.2f}")
     except Exception as e:
         st.error(f"Terjadi error saat prediksi: {e}")
+

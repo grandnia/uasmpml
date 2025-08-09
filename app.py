@@ -9,6 +9,18 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
+class MyCustomTransformer:
+    def fit(self, X, y=None):
+        # fit logic jika perlu, kalau nggak tinggal return self
+        return self
+
+    def transform(self, X):
+        # contoh transformasi, misal lower case semua string di DataFrame
+        X_transformed = X.copy()
+        for col in X_transformed.select_dtypes(include=['object']).columns:
+            X_transformed[col] = X_transformed[col].str.lower()
+        return X_transformed
+
 st.title("Prediksi Profit Menu Restoran")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -39,3 +51,4 @@ if st.button('Prediksi Profit'):
         st.success(f"Estimasi profit: Rp {prediksi[0]:,.2f}")
     except Exception as e:
         st.error(f"Terjadi error saat prediksi: {e}")
+
